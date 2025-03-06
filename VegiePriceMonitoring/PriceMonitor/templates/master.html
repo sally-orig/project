@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        {% block header %}
+        {% endblock %}
+        {% comment %} <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'vegDetails' %}">Vegetable Details</a></li>
+                <li><a href="{% url 'priceTrend' %}">Price Trend</a></li>
+            </ul>
+        </nav> {% endcomment %}
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        {% block footer %}
+        {% endblock %}
+        {% comment %} <p>&copy; Veggie Price Monitoring. All rights reserved.</p> {% endcomment %}
+    </footer>
+</body>
+</html>
