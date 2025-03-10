@@ -1,6 +1,9 @@
-from django.http import HttpResponse
 from django.template import loader
+from django.http import HttpResponse
 
-def all_veg_prices(request):
-    template = loader.get_template('all_veg_prices.html')
-    return HttpResponse(template.render())
+def price_list(request):
+    template = loader.get_template('pricelist.html')
+    context = {
+        'data': 'Hello world!',
+    }
+    return HttpResponse(template.render(context, request))
