@@ -28,6 +28,6 @@ https://dbdiagram.io/d/Vegtable-Price-monitoring-67cea3f7263d6cf9a0d0afe4
 Week 1 - Plan and design each page of the website, erd, roles, features
 Week 2 to 3 - Development and test scripts of the vegetable price list page with location filter
 Week 4 - Development and test scripts of add user form
-Week 5 - Development and test scripts of update price form
-Week 6 to 8 - Development and test scripts of Price trend chart
+Week 5 to 6 - Development and test scripts of update price form
+Week 7 to 8 - Development and test scripts of Price trend chart
 
