@@ -1,10 +1,10 @@
-Wholesale Vegetable Prices Monitoring
+--Wholesale Vegetable Prices Monitoring--
 
 --Objective: 
 1. This website is used to monitor daily vegetable prices based on selected market location.
 2. Plots the price trend for each vegetable over time (daily, monthly, quarterly, yearly).
 
-Intended Users: 
+--Intended Users: 
 1. Farmers, Wholesalers of vegetables - Monitor daily vegetable prices on certain market locations (e.g Baguio wholesale market)
 2. Price Updater - Update prices daily (staff from the market location)
 3. Admin - add price updater, maintain website
