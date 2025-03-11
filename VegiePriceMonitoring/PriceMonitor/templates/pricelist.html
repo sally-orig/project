@@ -17,41 +17,16 @@
   <!-- Content Section -->
   <div class="container">
     <div class="tile-container">
-      <div class="tile">
-        <img src="https://images.pexels.com/photos/4590775/pexels-photo-4590775.jpeg" alt="Tomato">
-        <h2>Tomato</h2>
-        <p>Price: $2.50/kg</p>
-      </div>
-      <div class="tile">
-        <img src="https://images.pexels.com/photos/2631409/pexels-photo-2631409.jpeg" alt="Potato">
-        <h2>Potato</h2>
-        <p>Price: $1.20/kg</p>
-      </div>
-      <div class="tile">
-        <img src="https://images.pexels.com/photos/4643429/pexels-photo-4643429.jpeg" alt="Carrot">
-        <h2>Carrot</h2>
-        <p>Price: $3.00/kg</p>
-      </div>
-      <div class="tile">
-        <img src="https://images.pexels.com/photos/1582649/pexels-photo-1582649.jpeg" alt="Broccoli">
-        <h2>Broccoli</h2>
-        <p>Price: $4.00/kg</p>
-      </div>
-      <div class="tile">
-        <img src="https://images.pexels.com/photos/1594770/pexels-photo-1594770.jpeg" alt="Spinach">
-        <h2>Spinach</h2>
-        <p>Price: $2.00/kg</p>
-      </div>
-      <div class="tile">
-        <img src="https://images.pexels.com/photos/6037164/pexels-photo-6037164.jpeg" alt="Onion">
-        <h2>Onion</h2>
-        <p>Price: $1.50/kg</p>
-      </div>
-      <div class="tile">
-        <img src="https://images.pexels.com/photos/1594770/pexels-photo-1594770.jpeg" alt="Spinach">
-        <h2>Spinach</h2>
-        <p>Price: $2.00/kg</p>
-      </div>
+      {% for item in vegetables %}
+        <div class="tile">
+          <a href="https://images.pexels.com/photos/4590775/pexels-photo-4590775.jpeg" target="_blank">
+            <img src="https://images.pexels.com/photos/4590775/pexels-photo-4590775.jpeg" alt="Tomato">
+          </a>
+          <h2>{{item.name}}</h2>
+          <p>₱ {{item.price}}/kg</p>
+          <p style="font-size: 14px;margin-top: 2px;">{{item.updated_at}}</p>
+        </div>
+      {% endfor %}
     </div>
   </div>
 </body>
