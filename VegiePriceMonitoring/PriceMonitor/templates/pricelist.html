@@ -19,8 +19,8 @@
     <div class="tile-container">
       {% for item in vegetables %}
         <div class="tile">
-          <a href="https://images.pexels.com/photos/4590775/pexels-photo-4590775.jpeg" target="_blank">
-            <img src="https://images.pexels.com/photos/4590775/pexels-photo-4590775.jpeg" alt="Tomato">
+          <a href="media/{{item.img}}" target="_blank">
+            <img src="media/{{item.img}}" alt="Tomato">
           </a>
           <h2>{{item.name}}</h2>
           <p>₱ {{item.price}}/kg</p>
