@@ -10,14 +10,21 @@
 3. Admin - add price updater, maintain website
 
 --Features:
-1. Vegetable price list page - Vegetable name, picture, price
-   1.a Filters: Location
-   1.b Search: by Name, Price
-2. Price trend chart - Line chart for price over time for each location
-   2. Filters: Vegetable
-3. Add market updater form - for the website admin to add market updater and their market location
-4. Update vegetable price form - for market updater to input prices for the day
-5. CSV upload of prices for multiple days - *To be implemented if time permits
+1. Vegetable price list page - vegetable name, picture, price, last_updated
+   1.a Search: by Vegetable Name, Price
+2. Price trend chart - Line chart for price over time for each vegetable
+   2. Filters: Vegetable name
+3. Add vegetable form - for the market staff to add vegetable
+4. Add market updater form - for the website admin to add market updater and their market location
+5. Update vegetable price form - for market updater to input prices for the day
+
+
+--Additional feature in the future:
+1. Price list - filter by location, date range (last updated)
+2. Add multiple vegetables in a single form
+3. Update multiple vegetable price in a single form
+4. Multiple locations can update prices
+5. CSV upload of prices for multiple days
 
 
 --ERD Link:
@@ -25,9 +32,9 @@ https://dbdiagram.io/d/Vegtable-Price-monitoring-67cea3f7263d6cf9a0d0afe4
 
 
 --Timeline:
-Week 1 - Plan and design each page of the website, erd, roles, features
-Week 2 to 3 - Development and test scripts of the vegetable price list page with location filter
-Week 4 - Development and test scripts of add user form
-Week 5 to 6 - Development and test scripts of update price form
-Week 7 to 8 - Development and test scripts of Price trend chart
+Week 1 - Plan and design each page of the website, erd, roles, features, test scripts
+Week 2 to 3 - Development of the vegetable price list page
+Week 4 - Development of add user form, add vegetable form
+Week 5 - Development of update price form
+Week 6 to 7 - Development of Price trend chart
 

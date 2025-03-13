@@ -1,0 +1,23 @@
+<!-- upload_image.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+</head>
+<body>
+    <h1>Add Vegetable</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ add_veg_form.as_p }}
+        <button type="submit">Submit Updates</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'price_list' %}">Back to price list</a>
+
+</body>
+</html>

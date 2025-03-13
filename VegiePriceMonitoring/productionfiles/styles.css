@@ -76,6 +76,8 @@
     width: 130px;
     height: 130px;
     border-radius: 10px;
+    border-style: solid;
+    border-color: black;
     object-fit: cover;
     margin-bottom: 10px;
   }
@@ -86,13 +88,13 @@
   }
   
   .tile h2 {
-    font-size: 24px;
+    font-size: 22px;
     color: #333;
     margin-bottom: 7px;
   }
   
   .tile p {
-    font-size: 18px;
+    font-size: 16px;
     color: #777;
   }
   
