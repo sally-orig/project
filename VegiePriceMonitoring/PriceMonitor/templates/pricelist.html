@@ -1,33 +1,22 @@
-{% load static %}
+{% extends 'main.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vegetable Price List</title>
-  <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-  <!-- Banner Section -->
-  <div class="banner">
-	<h1>Vegetable Price List</h1>
-  </div>
+{% block title %}Vegetable Price List{% endblock %}
 
-  <!-- Content Section -->
-  <div class="container">
-    <div class="tile-container">
-      {% for item in vegetables %}
-        <div class="tile">
-          <a href="media/{{item.img}}" target="_blank">
-            <img src="media/{{item.img}}" alt="Tomato">
-          </a>
-          <h2>{{item.name}}</h2>
-          <p>₱ {{item.price}}/kg</p>
-          {% comment %} <p style="font-size: 14px;margin-top: 2px;">{{item.updated_at}}</p> {% endcomment %}
+{% block content %}
+    <section id="price_list">
+      <div class="container">
+        <div class="tile-container">
+          {% for item in vegetables %}
+            <div class="tile">
+              <a href="media/{{item.img}}" target="_blank">
+                <img src="media/{{item.img}}" alt="Tomato">
+              </a>
+              <h2>{{item.name}}</h2>
+              <p>₱ {{item.price}}/kg</p>
+              {% comment %} <p style="font-size: 14px;margin-top: 2px;">{{item.updated_at}}</p> {% endcomment %}
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div>
-  </div>
-</body>
-</html>
+      </div>
+    </section>
+{% endblock %}

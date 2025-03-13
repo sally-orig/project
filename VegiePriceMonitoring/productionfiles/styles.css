@@ -12,6 +12,12 @@
     padding: 0;
     height: 100vh;
   }
+
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+  }
   
   .banner {
     position: relative;
@@ -40,13 +46,37 @@
     z-index: 1;
   }
   
-  h1 {
+  .banner h1 {
     font-size: 48px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
     position: relative;
     z-index: 2;
     padding-top: 30px;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .navbar li {
+    margin: 0 15px;
+  }
+
+  .navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+  }
+
+  .navbar a:hover {
+    background-color: #555;
+    border-radius: 5px;
   }
   
   .container {
@@ -75,9 +105,8 @@
   .tile img {
     width: 130px;
     height: 130px;
+    border: 2px solid black;
     border-radius: 10px;
-    border-style: solid;
-    border-color: black;
     object-fit: cover;
     margin-bottom: 10px;
   }
@@ -115,3 +144,8 @@
   .user-icon a:hover {
     color: #4CAF50;
   }
+
+  #price_list {
+    background-color: #3498db;
+    color: #fff;
+    }
