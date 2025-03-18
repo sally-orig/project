@@ -1,22 +1,42 @@
 {% extends 'main.html' %}
 
-{% block title %}Vegetable Price List{% endblock %}
+{% block title %}Vegetable Price List{% endblock %}  
 
 {% block content %}
-    <section id="price_list">
-      <div class="container">
-        <div class="tile-container">
-          {% for item in vegetables %}
-            <div class="tile">
-              <a href="media/{{item.img}}" target="_blank">
-                <img src="media/{{item.img}}" alt="Tomato">
-              </a>
-              <h2>{{item.name}}</h2>
-              <p>₱ {{item.price}}/kg</p>
-              {% comment %} <p style="font-size: 14px;margin-top: 2px;">{{item.updated_at}}</p> {% endcomment %}
-            </div>
-          {% endfor %}
+  <div class="align-wrapper">
+    <a href="{% url 'add_vegetable' %}" class="add-btn">Add Vegetable</a>
+    <div class="search-container">
+      <form action="{% url 'price_list' %}" method="get" class="search-form" style="display: flex;">
+        <input type="text" name="query" placeholder="Search for vegetables..." class="search-input" value="{{ request.GET.query }}">
+        <button type="submit" class="search-button">Search</button>
+        <button type="submit" name="query" value="" class="reset-button">Reset</button>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+    <div class="tile-container">
+      {% for item in vegetables %}
+        <div class="tile">
+          <a href="media/{{item.img}}" target="_blank">
+            <img src="media/{{item.img}}" alt="Tomato">
+          </a>
+          <h2>{{item.name}}</h2>
+          <p>₱ {{item.price}}/kg</p>
+          <p style="font-size: 14px;">{{item.tran_id.created_at|date:"M d, Y"}}</p>
+
+          <div class="button-container">
+            <a href="#" class="btn btn-secondary delete-btn" data-id="{{ item.pk }}">
+              <i class="bi bi-trash"></i>
+            </a>
+            <a href="{% url 'update_vegetable' pk=item.pk %}" class="btn btn-secondary edit-btn">
+              <i class="bi bi-pencil"></i>
+            </a>
+          </div>
         </div>
-      </div>
-    </section>
+        {% empty %}
+          <p id="empty">No vegetables available.</p>
+      {% endfor %}
+    </div>
+  </div>
+
 {% endblock %}

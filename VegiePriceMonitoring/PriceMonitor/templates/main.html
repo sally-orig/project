@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
@@ -13,21 +15,16 @@
         <div class="banner">
             <h1>Vegetable Price List</h1>
         </div>
-        <nav>
-            <ul class="navbar">
-                <li><a href="/">Home</a></li>
-                <li><a href="{% url 'add_vegetable' %}">Add Vegetable</a></li>
-            </ul>
-        </nav>
+        {% block navbar %}{% endblock %}
     </header>
-    <main>
-        <div class="content">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </main>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
     <footer>
         <p>&copy; Veggie Price Monitoring. All rights reserved.</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/delete_vegetable.js' %}"></script>
 </body>
 </html>
