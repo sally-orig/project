@@ -285,3 +285,21 @@
       background-color: #f0f0f04b;
       cursor: not-allowed;
   }
+
+  nav {
+    background-color: #333333dc;
+    overflow: hidden;
+    align-items: center;
+}
+nav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 7px 20px;
+    text-decoration: none;
+}
+nav a:hover {
+    background-color: #ddd;
+    color: black;
+}

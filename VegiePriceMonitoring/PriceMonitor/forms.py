@@ -19,9 +19,3 @@ class VegetableForm(forms.ModelForm):
             self.fields['img'].widget.attrs['readonly'] = True
             self.fields['name'].required = False
             self.fields['img'].required = False
-
-    def clean_name(self):
-        name = self.cleaned_data.get('name')
-        if Vegetable.objects.filter(name=name).exists() and not self.instance.pk:
-            raise forms.ValidationError("A vegetable with this name already exists.")
-        return name

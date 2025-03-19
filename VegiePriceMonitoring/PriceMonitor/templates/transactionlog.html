@@ -1,0 +1,58 @@
+
+{% extends "main.html" %}
+
+{% block title %} Transaction Log {% endblock title %}
+
+
+{% block content %}
+<style>
+    table {
+        width: 90%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        align: center;
+    }
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Vegetable Name</th>
+            <th>Price</th>
+            <th>Created By</th>
+            <th>Date Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.id }}</td>
+            <td>{{ transaction.tran_type }}</td>
+            <td>{{ transaction.vegetable_name }}</td>
+            <td>{{ transaction.price }}</td>
+            <td>{{ transaction.created_by }}</td>
+            <td>{{ transaction.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+    

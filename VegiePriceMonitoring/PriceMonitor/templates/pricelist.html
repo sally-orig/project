@@ -22,7 +22,7 @@
           </a>
           <h2>{{item.name}}</h2>
           <p>₱ {{item.price}}/kg</p>
-          <p style="font-size: 14px;">{{item.tran_id.created_at|date:"M d, Y"}}</p>
+          <p style="font-size: 14px;">{{item.tran_id.created_at|date:"M d, Y H:i a"}}</p>
 
           <div class="button-container">
             <a href="#" class="btn btn-secondary delete-btn" data-id="{{ item.pk }}">
