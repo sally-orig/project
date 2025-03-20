@@ -15,6 +15,8 @@ class VegetableForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.pk:
+            self.fields['name'].widget.attrs['disabled'] = True
+            self.fields['img'].widget.attrs['disabled'] = True
             self.fields['name'].widget.attrs['readonly'] = True
             self.fields['img'].widget.attrs['readonly'] = True
             self.fields['name'].required = False

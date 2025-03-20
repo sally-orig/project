@@ -289,17 +289,24 @@
   nav {
     background-color: #333333dc;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
     align-items: center;
-}
-nav a {
+  }
+  nav a {
     float: left;
     display: block;
     color: #f2f2f2;
     text-align: center;
     padding: 7px 20px;
     text-decoration: none;
-}
-nav a:hover {
+  }
+  nav a:hover{
     background-color: #ddd;
     color: black;
-}
+  }
+
+  .active {
+    background-color: #ddd;
+    color: black;
+  }

@@ -15,10 +15,7 @@
         <div class="banner">
             <h1>Vegetable Price List</h1>
         </div>
-        <nav>
-            <a href="/" class="active">Home</a>
-            <a href="/transactions">Transactions</a>
-        </nav>
+        {% block navigation %}{% endblock navigation %}
     </header>
     <div class="content">
         {% block content %}
