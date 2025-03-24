@@ -1,6 +1,7 @@
 # Wholesale Vegetable Prices Monitoring
 
-##Objective: 
+
+## Objective: 
 1. This website is used to monitor daily vegetable prices.
 2. Plots the price trend for each vegetable everyday.
 
