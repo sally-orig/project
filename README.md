@@ -1,10 +1,10 @@
-#Wholesale Vegetable Prices Monitoring
+# Wholesale Vegetable Prices Monitoring
 
 ##Objective: 
 1. This website is used to monitor daily vegetable prices.
 2. Plots the price trend for each vegetable everyday.
 
-##Intended Users: 
+## Intended Users: 
 1. Farmers, Wholesalers of vegetables, Viewers - Monitor daily vegetable prices on certain market locations (e.g NVAT wholesale market)
    features:
       *  View vegetable details list
@@ -34,7 +34,7 @@
          * Order by date created
 
 
-##How to run website locally:
+## How to run website locally:
 1. Install Python 3.13.0
 2. Install Pip 24.2
 3. Create Virtual Environment (PythonTesting) --python -m venv PythonProject
