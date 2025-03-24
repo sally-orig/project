@@ -1,40 +1,49 @@
 --Wholesale Vegetable Prices Monitoring--
 
 --Objective: 
-1. This website is used to monitor daily vegetable prices based on selected market location.
-2. Plots the price trend for each vegetable over time (daily, monthly, quarterly, yearly).
+1. This website is used to monitor daily vegetable prices.
+2. Plots the price trend for each vegetable everyday.
 
 --Intended Users: 
-1. Farmers, Wholesalers of vegetables - Monitor daily vegetable prices on certain market locations (e.g Baguio wholesale market)
-2. Price Updater - Update prices daily (staff from the market location)
-3. Admin - add price updater, maintain website
+1. Farmers, Wholesalers of vegetables, Viewers - Monitor daily vegetable prices on certain market locations (e.g NVAT wholesale market)
+   features:
+      a. View vegetable details list
+         a.1 Vegetable details list view (Vegetable name, image, price, last updated)
+         a.2 Search by vegetable name
 
---Features:
-1. Vegetable price list page - vegetable name, picture, price, last_updated
-   1.a Search: by Vegetable Name, Price
-2. Price trend chart - Line chart for price over time for each vegetable
-   2. Filters: Vegetable name
-3. Add vegetable form - for the market staff to add vegetable
-4. Add market updater form - for the website admin to add market updater and their market location
-5. Update vegetable price form - for market updater to input prices for the day
+2. Admin - add, update, deactivate vegetable from list
+   features:
+      a. View vegetable details list
+         a.1 Vegetable details list view (Vegetable name, image, price, last updated)
+         a.2 Search by vegetable name
+         a.3 Reset button for search bar
+      b. Add New Vegetable Form
+         b.1 Name - Should be unique (if in database, reactivate vegetable)
+         b.2 Description
+         b.3 Price - Should be greater then 0 (with validation)
+         b.4 Image - uploaded by user (only accepts image files such as jpg, png)
+         b.5 Save and Cancel buttons
+      c. Update Vegetable Form
+         c.1 Name and Image - not editable
+         c.2 Description
+         c.3 Price - Should be greater then 0 (with validation)
+         c.4 Save and Cancel buttons
+      d. Deactivate Vegetable
+         d.1 Confimation prompt
+      e. View Transaction Logs list
+         e.1 Order by date created
 
 
---Additional feature in the future:
-1. Price list - filter by location, date range (last updated)
-2. Add multiple vegetables in a single form
-3. Update multiple vegetable price in a single form
-4. Multiple locations can update prices
-5. CSV upload of prices for multiple days
-
-
---ERD Link:
-https://dbdiagram.io/d/Vegtable-Price-monitoring-67cea3f7263d6cf9a0d0afe4
-
-
---Timeline:
-Week 1 - Plan and design each page of the website, erd, roles, features, test scripts
-Week 2 to 3 - Development of the vegetable price list page
-Week 4 - Development of add user form, add vegetable form
-Week 5 - Development of update price form
-Week 6 to 7 - Development of Price trend chart
-
+--How to run website locally:
+1. Install Python 3.13.0
+2. Install Pip 24.2
+3. Create Virtual Environment (PythonTesting) --python -m venv PythonProject
+4. Activate Venv (using git bash) --source PythonTesting/Scripts/activate *Activate using cmd or powershell --Scripts/activate
+5. Clone remote repository to your local computer with folder name: Exercise2 
+--git clone https://github.com/sally-orig/project.git project
+6. Install additional extensions using requirements.txt
+--pip install -r requirements.txt
+7. Go to project/VegiePriceMonitoring
+--cd PythonProject/project/VegiePriceMonitoring
+8. Run server and open to browser
+--py manage.py runserver
