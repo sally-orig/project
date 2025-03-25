@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
-from django.db.models import Q, Avg, functions
+from django.db.models import Q, Avg, Count, functions
 from datetime import datetime
 from .models import Vegetable, VegetableAction
 from .forms import VegetableForm
@@ -117,7 +117,6 @@ def veg_price_chart(request):
     prices = []
 
     vegetables = Vegetable.objects.values('name').all()
-
     selected_vegetable = request.GET.get('vegetable', 'Kamatis')
 
     price_updates = (
@@ -143,7 +142,10 @@ def veg_price_chart(request):
             'data': prices,
             'fill': 'false',
             'borderColor': '#4CAF50',
-            'tension': 0.1
+            'tension': 0.1,
+            'pointStyle': 'circle',
+            'pointRadius': 5,
+            'pointBackgroundColor': 'gray'
         })
     is_admin = request.user.groups.filter(name='admin').exists()
     context = {

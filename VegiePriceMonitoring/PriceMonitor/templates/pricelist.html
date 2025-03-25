@@ -41,7 +41,7 @@
           {% if is_admin %}
           <div class="button-container">
             <a href="#" class="btn btn-secondary delete-btn" data-id="{{ item.pk }}" title="Deactivate Vegetable">
-              <i class="bi bi-trash"></i>
+              <i class="bi bi-x-circle"></i>
             </a>
             <a href="{% url 'update_vegetable' pk=item.pk %}" class="btn btn-secondary edit-btn", title="Update Vegetable">
               <i class="bi bi-pencil"></i>
