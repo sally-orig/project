@@ -1,0 +1,92 @@
+{% extends "main.html" %}
+
+{% block title %} Vegetable Price Chart {% endblock title %}
+
+{% block navigation %}
+  <nav>
+    <a href="/">Home</a>
+    {% if  is_admin %}
+      <a href="/vegetable/actions-log">Actions Log</a>
+    {% endif %}
+    <a href="/vegetable/price-chart" class="active">Price Chart</a>
+  </nav>
+{% endblock navigation %}
+
+{% block content %}
+    <form method="get" action="">
+        <div class="dropdown-container">
+            <label for="vegetable">Choose a Vegetable: </label>
+            <select name="vegetable" id="vegetable" onchange="this.form.submit()">
+                {% for vegetable in vegetables %}
+                    <option value="{{ vegetable.name }}" {% if vegetable.name == selected_vegetable %}selected{% endif %}>
+                        {{ vegetable.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
+    <h3>Price Data for: {{ selected_vegetable }}</h3>
+
+    <div class="chart_container" style="width:70%;height:50%;margin: auto auto 50px;">
+        <canvas id="priceChart"></canvas>
+    </div>
+    <script>
+        // Receive the chart data passed from Django (context variable)
+        const chartData = {{ chart_data|safe }};
+        
+        // Initialize the chart
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: chartData.datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,  // Allow the chart to resize according to the container size
+                aspectRatio: 16/9,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Date (MM DD, YYYY)',
+                            font: {
+                                size: 20
+                            }
+                        },
+                        ticks: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Price (PHP / Kilo)',
+                            font: {
+                                size: 20
+                            }
+                        },
+                        ticks: {
+                            font: {
+                                size: 14
+                            }
+                        },
+                        max: {{dynamic_y_max}}
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock content %}
+

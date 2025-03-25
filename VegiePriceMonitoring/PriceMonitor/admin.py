@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Vegetable, Transaction
+from .models import Vegetable, VegetableAction
 
 class VegetableAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'created_at', 'status', 'get_tran_id')
@@ -10,8 +10,8 @@ class VegetableAdmin(admin.ModelAdmin):
     
     get_tran_id.short_description = 'Tran ID'
 
-class TransactionAdmin(admin.ModelAdmin):
+class VegetableActionAdmin(admin.ModelAdmin):
     list_display = ('id', 'tran_type', 'created_at', 'created_by', 'details')
 
 admin.site.register(Vegetable, VegetableAdmin)
-admin.site.register(Transaction, TransactionAdmin)
+admin.site.register(VegetableAction, VegetableActionAdmin)

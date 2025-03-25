@@ -1,13 +1,14 @@
 
 {% extends "main.html" %}
 
-{% block title %} Transaction Log {% endblock title %}
+{% block title %} Vegetable Actions Log {% endblock title %}
 
-{% block navigation %}  
-    <nav>
-        <a href="/">Home</a>
-        <a href="/transactions" class="active">Transactions</a>
-    </nav>
+{% block navigation %}
+  <nav>
+      <a href="/">Home</a>
+      <a href="/vegetable/actions-log" class="active">Actions Log</a>
+      <a href="/vegetable/price-chart">Price Chart</a>
+  </nav>
 {% endblock navigation %}
 
 {% block content %}
@@ -48,14 +49,14 @@
         </tr>
     </thead>
     <tbody>
-        {% for transaction in transactions %}
+        {% for action in actions %}
         <tr>
-            <td>{{ transaction.id }}</td>
-            <td>{{ transaction.tran_type }}</td>
-            <td>{{ transaction.vegetable_name }}</td>
-            <td>{{ transaction.price }}</td>
-            <td>{{ transaction.created_by }}</td>
-            <td>{{ transaction.created_at }}</td>
+            <td>{{ action.id }}</td>
+            <td>{{ action.tran_type }}</td>
+            <td>{{ action.vegetable_name }}</td>
+            <td>{{ action.price }}</td>
+            <td>{{ action.created_by }}</td>
+            <td>{{ action.created_at }}</td>
         </tr>
         {% endfor %}
     </tbody>
