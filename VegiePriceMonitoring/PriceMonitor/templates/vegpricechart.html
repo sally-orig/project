@@ -34,6 +34,7 @@
     <script>
         // Receive the chart data passed from Django (context variable)
         const chartData = {{ chart_data|safe }};
+        const dynamicMaxY = {{ dynamic_y_max }};
         
         // Initialize the chart
         const ctx = document.getElementById('priceChart').getContext('2d');
@@ -77,7 +78,7 @@
                                 size: 14
                             }
                         },
-                        max: {{dynamic_y_max}}
+                        max: dynamicMaxY
                     }
                 },
                 plugins: {

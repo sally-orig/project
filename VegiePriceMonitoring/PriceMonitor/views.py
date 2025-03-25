@@ -130,7 +130,7 @@ def veg_price_chart(request):
     )
     for update in price_updates:
         dates.append(update['date'].strftime('%b %d, %Y'))
-        prices.append(str(update['average_price']))
+        prices.append(float(update['average_price']))
 
         if update['average_price'] > max_price:
             max_price = update['average_price']
