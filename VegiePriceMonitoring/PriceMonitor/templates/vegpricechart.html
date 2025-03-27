@@ -5,10 +5,10 @@
 {% block navigation %}
   <nav>
     <a href="/">Home</a>
+    <a href="/vegetable/price-chart" class="active">Price Chart</a>
     {% if  is_admin %}
       <a href="/vegetable/actions-log">Actions Log</a>
     {% endif %}
-    <a href="/vegetable/price-chart" class="active">Price Chart</a>
   </nav>
 {% endblock navigation %}
 
@@ -26,9 +26,64 @@
         </div>
     </form>
 
-    <h3>Price Data for: {{ selected_vegetable }}</h3>
+    <div class="row justify-content-center mt-4">
+        <!-- Highest Price Card -->
+        {% if highest_price_data %}
+          <div class="col-md-4">
+            <div class="card border-success">
+              <div class="card-header text-white bg-success">
+                Highest Price
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Price: {{ highest_price_data.average_price|floatformat:2 }} USD</h5>
+                <p class="card-text">Date: {{ highest_price_data.date|date:"M d, Y" }}</p>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="col-md-4">
+            <div class="card border-danger">
+              <div class="card-header text-white bg-danger">
+                Highest Price
+              </div>
+              <div class="card-body">
+                <p class="card-text">No price data available for the highest price.</p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+  
+        <!-- Lowest Price Card -->
+        {% if lowest_price_data %}
+          <div class="col-md-4">
+            <div class="card border-danger">
+              <div class="card-header text-white bg-danger">
+                Lowest Price
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Price: {{ lowest_price_data.average_price|floatformat:2 }} USD</h5>
+                <p class="card-text">Date: {{ lowest_price_data.date|date:"M d, Y" }}</p>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="col-md-4">
+            <div class="card border-danger">
+              <div class="card-header text-white bg-danger">
+                Lowest Price
+              </div>
+              <div class="card-body">
+                <p class="card-text">No price data available for the lowest price.</p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
 
-    <div class="chart_container" style="width:70%;height:50%;margin: auto auto 50px;">
+    <h3>Daily Price Chart for: {{ selected_vegetable }}</h3>
+
+    <div class="chart_container" style="width:80%;height:60%;margin: auto auto 50px;">
         <canvas id="priceChart"></canvas>
     </div>
     <script>

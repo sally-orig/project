@@ -128,6 +128,9 @@ def veg_price_chart(request):
         .annotate(average_price=Avg('price'))
         .order_by('date')
     )
+    highest_price = price_updates.order_by('-average_price').first()
+    lowest_price = price_updates.order_by('average_price').first()
+    
     for update in price_updates:
         dates.append(update['date'].strftime('%b %d, %Y'))
         prices.append(float(update['average_price']))
@@ -147,6 +150,7 @@ def veg_price_chart(request):
             'pointRadius': 5,
             'pointBackgroundColor': 'gray'
         })
+
     is_admin = request.user.groups.filter(name='admin').exists()
     context = {
         'chart_data': chart_data,
@@ -154,6 +158,8 @@ def veg_price_chart(request):
         'dynamic_y_max': max_price + 10,
         'vegetables': vegetables,
         'selected_vegetable': selected_vegetable,
+        'highest_price_data': highest_price,
+        'lowest_price_data': lowest_price
     }
 
     return render(request, 'vegpricechart.html', context)
