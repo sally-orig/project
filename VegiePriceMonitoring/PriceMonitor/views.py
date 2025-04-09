@@ -2,6 +2,11 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q, Avg, Count, functions
 from datetime import datetime
+import requests
+import os
+from django.http import Http404
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 from .models import Vegetable, VegetableAction
 from .forms import VegetableForm
 
@@ -9,15 +14,22 @@ from .forms import VegetableForm
 TRAN_TYPE_UPDATE: str = 'update_price'
 TRAN_TYPE_ADD: str = 'add_vegetable'
 
+BASE_API_URL: str = "http://127.0.0.1:8001"
+VEGETABLES_API_URL: str = f"{BASE_API_URL}/vegetables"
+VEGETABLE_ACTIONS_API_URL: str = f"{BASE_API_URL}/vegetable-actions"
+VEGETABLE_PRICE_CHART_API_URL: str = f"{BASE_API_URL}/vegetable-price-chart"
+
 def is_admin_or_staff(user):
     return user.groups.filter(name='admin').exists()
 
 def price_list(request):
-    query = request.GET.get('query', '')
-    if query:
-        vegetables = Vegetable.objects.filter(name__icontains=query, status=True).order_by('name')
+    query = request.GET.get('query', None)
+    response = requests.get(VEGETABLES_API_URL, params={'query': query})
+
+    if response.status_code == 200:
+        vegetables = response.json()
     else:
-        vegetables = Vegetable.objects.select_related('tran_id').filter(status=True).order_by('name')
+        vegetables = []
 
     is_admin = request.user.groups.filter(name='admin').exists()
     context = {
@@ -39,26 +51,23 @@ def save_transaction_logs(user, details: VegetableForm, tran_type: str, otherDet
 
 @user_passes_test(is_admin_or_staff)
 def add_vegetable(request):
+    UPLOADED_IMAGES_FOLDER: str = "veg_images"
     if request.method == 'POST' and 'img' in request.FILES:
         add_veg_form = VegetableForm(request.POST, request.FILES)
         if add_veg_form.is_valid():
-            vegetable_name = add_veg_form.cleaned_data['name']
-            vegetable = Vegetable.objects.filter(name=vegetable_name).first()
-            if vegetable:
-                vegetable.status = True
-                vegetable.description = add_veg_form.cleaned_data['description']
-                vegetable.price = add_veg_form.cleaned_data['price']
-                vegetable.img = add_veg_form.cleaned_data['img']
-                vegetable.created_at = datetime.now()
-                vegetable.save()
-                transaction = save_transaction_logs(request.user, vegetable, 'add_vegetable', f'Vegetable {vegetable.name} reactivated')
-            else:
-                vegetable = add_veg_form.save(commit=False)
-                transaction = save_transaction_logs(request.user, vegetable, 'add_vegetable', f'Add Vegetable {vegetable.name}')
-                vegetable.tran_id = transaction
-                vegetable.created_by = request.user
-                vegetable.created_at = datetime.now()
-                vegetable.save()
+            img = request.FILES['img']
+            folder_path = os.path.join(settings.MEDIA_ROOT, UPLOADED_IMAGES_FOLDER)
+            fs = FileSystemStorage(location=folder_path)
+            filename = fs.save(img.name, img)
+            img_url = f"{UPLOADED_IMAGES_FOLDER}/{filename}"
+            vegetable_data = {
+                'name': add_veg_form.cleaned_data['name'],
+                'price': float(add_veg_form.cleaned_data['price']),
+                'img': img_url,
+                'description': add_veg_form.cleaned_data['description'],
+                'created_by': str(request.user),
+            }
+            response = requests.post(VEGETABLES_API_URL, json=vegetable_data)
             return redirect('price_list')
     else:
         add_veg_form = VegetableForm()
@@ -91,18 +100,24 @@ def update_vegetable(request, pk: int = None):
 
 @user_passes_test(is_admin_or_staff)
 def delete_vegetable(request, pk: int = None):
-    veg_instance = get_object_or_404(Vegetable, pk=pk)
-    transaction = save_transaction_logs(request.user, veg_instance, 'deactivate_vegetable', f'Deactivate Vegetable {veg_instance.name}')
-    veg_instance.tran_id = transaction
-    veg_instance.status = False
-    veg_instance.save()
+    response = requests.delete(f"{VEGETABLES_API_URL}/{pk}", json={'updated_by': str(request.user)})
+    if response.status_code == 404:
+        raise Http404("Vegetable not found.")
+    elif response.status_code == 500:
+        return render(request, '500.html', {'message': 'Server error occurred.'})
     return redirect('price_list')
 
 @user_passes_test(is_admin_or_staff)
 def vegetable_actions_log(request):
-    vegetable_actions = VegetableAction.objects.all().order_by('created_at').reverse()
+    response = requests.get(VEGETABLE_ACTIONS_API_URL)
+    if response.status_code == 200:
+        actions = response.json()
+        for action in actions:
+            action['price'] = round(float(action['price']), 2)
+    else:
+        actions = []
     context = {
-        'actions': vegetable_actions
+        'actions': actions
     }
     return render(request, 'vegetableactionslog.html', context)
 
@@ -112,54 +127,41 @@ def veg_price_chart(request):
         'labels': [],  # Dates for x-axis
         'datasets': [] 
     }
-    max_price = 0
-    dates = []
-    prices = []
 
-    vegetables = Vegetable.objects.values('name').all()
+    vegetables = requests.get(VEGETABLES_API_URL).json()
     selected_vegetable = request.GET.get('vegetable', 'Kamatis')
+    response = requests.get(VEGETABLE_PRICE_CHART_API_URL, params={'selected_vegetable': selected_vegetable})
+    if response.status_code == 200:
+        dates = response.json().get('dates', [])
+        prices = response.json().get('prices', [])
+        highest_price = response.json().get('highest_price', {})
+        lowest_price = response.json().get('lowest_price', {})
+        max_price = float(response.json().get('max_price', 0))
 
-    price_updates = (
-        VegetableAction.objects
-        .filter(Q(tran_type='add_vegetable') | Q(tran_type='update_price'), vegetable_name=selected_vegetable)
-        .annotate(date=functions.TruncDate('created_at'))
-        .values('date')
-        .distinct()
-        .annotate(average_price=Avg('price'))
-        .order_by('date')
-    )
-    highest_price = price_updates.order_by('-average_price').first()
-    lowest_price = price_updates.order_by('average_price').first()
-    
-    for update in price_updates:
-        dates.append(update['date'].strftime('%b %d, %Y'))
-        prices.append(float(update['average_price']))
+        if dates and prices:
+            chart_data['labels'] = dates
+            chart_data['datasets'].append({
+                'label': selected_vegetable, 
+                'data': prices,
+                'fill': 'false',
+                'borderColor': '#4CAF50',
+                'tension': 0.1,
+                'pointStyle': 'circle',
+                'pointRadius': 5,
+                'pointBackgroundColor': 'gray'
+            })
 
-        if update['average_price'] > max_price:
-            max_price = update['average_price']
+        is_admin = request.user.groups.filter(name='admin').exists()
+        context = {
+            'chart_data': chart_data,
+            'is_admin': is_admin,
+            'dynamic_y_max': max_price + 10,
+            'vegetables': vegetables,
+            'selected_vegetable': selected_vegetable,
+            'highest_price_data': highest_price,
+            'lowest_price_data': lowest_price
+        }
 
-    if dates and prices:
-        chart_data['labels'] = dates
-        chart_data['datasets'].append({
-            'label': selected_vegetable, 
-            'data': prices,
-            'fill': 'false',
-            'borderColor': '#4CAF50',
-            'tension': 0.1,
-            'pointStyle': 'circle',
-            'pointRadius': 5,
-            'pointBackgroundColor': 'gray'
-        })
-
-    is_admin = request.user.groups.filter(name='admin').exists()
-    context = {
-        'chart_data': chart_data,
-        'is_admin': is_admin,
-        'dynamic_y_max': max_price + 10,
-        'vegetables': vegetables,
-        'selected_vegetable': selected_vegetable,
-        'highest_price_data': highest_price,
-        'lowest_price_data': lowest_price
-    }
-
-    return render(request, 'vegpricechart.html', context)
+        return render(request, 'vegpricechart.html', context)
+    else:
+        return render(request, '500.html', {'error': 'Failed to fetch data from the API.'})

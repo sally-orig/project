@@ -36,7 +36,7 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title">Price: {{ highest_price_data.average_price|floatformat:2 }} USD</h5>
-                <p class="card-text">Date: {{ highest_price_data.date|date:"M d, Y" }}</p>
+                <p class="card-text">Date: {{ highest_price_data.date }}</p>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title">Price: {{ lowest_price_data.average_price|floatformat:2 }} USD</h5>
-                <p class="card-text">Date: {{ lowest_price_data.date|date:"M d, Y" }}</p>
+                <p class="card-text">Date: {{ lowest_price_data.date }}</p>
               </div>
             </div>
           </div>

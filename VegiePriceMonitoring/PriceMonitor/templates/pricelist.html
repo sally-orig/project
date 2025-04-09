@@ -35,15 +35,15 @@
             <img src="media/{{item.img}}" alt="Tomato">
           </a>
           <h2>{{item.name}}</h2>
-          <p>₱ {{item.price}}/kg</p>
-          <p style="font-size: 14px;">{{item.tran_id.created_at|date:"M d, Y H:i a"}}</p>
+          <p>₱ {{item.price|floatformat:2}}/kg</p>
+          <p style="font-size: 14px;">{{item.updated_at|date:"M d, Y H:i a"}}</p>
 
           {% if is_admin %}
           <div class="button-container">
-            <a href="#" class="btn btn-secondary delete-btn" data-id="{{ item.pk }}" title="Deactivate Vegetable">
+            <a href="#" class="btn btn-secondary delete-btn" data-id="{{ item.id }}" title="Deactivate Vegetable">
               <i class="bi bi-x-circle"></i>
             </a>
-            <a href="{% url 'update_vegetable' pk=item.pk %}" class="btn btn-secondary edit-btn", title="Update Vegetable">
+            <a href="{% url 'update_vegetable' pk=item.id %}" class="btn btn-secondary edit-btn", title="Update Vegetable">
               <i class="bi bi-pencil"></i>
             </a>
           </div>

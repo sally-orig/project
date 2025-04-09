@@ -1,20 +1,9 @@
-from datetime import datetime, timedelta
-from .models import Transaction
+import requests
 
-def create_bulk():
-    data = []
-    prices = [1, 2, 3, -2, 10, 5, 4, 6, 7, -2, -5, -10, 5, 3, -1, 8, 9, -5]
-    for idx, item in enumerate(prices):
-        data.append(
-            {
-            'tran_type': 'update_vegetable',
-            'vegetable_name': 'Kamatis',
-            'price': 20 + item,
-            'created_by': 'sgano',
-            'created_at': datetime.now() + timedelta(days=idx)
-            }
-        )
+url = "http://127.0.0.1:8001/vegetables"
 
-    for entry in data:
-        Transaction.objects.create(**entry)
+response = requests.get(url)
 
+if response.status_code == 200:
+    data = response.json()
+    print(data)
